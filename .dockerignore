@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.git/
+.gitignore
+.env
+*.db
+*.sqlite
+*.sqlite3
+.streamlit/secrets.toml
+.vscode/
+.idea/
+tmp/
+uploads/
+evals/results/

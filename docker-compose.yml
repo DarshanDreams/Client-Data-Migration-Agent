@@ -1,0 +1,34 @@
+﻿services:
+  api:
+    build: .
+    container_name: migration-agent-api
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: production
+      LOG_LEVEL: INFO
+      AUTO_APPROVAL_THRESHOLD: 0.85
+      ESCALATION_THRESHOLD: 0.60
+      MAX_VALIDATION_ATTEMPTS: 2
+      MAX_API_RETRIES: 3
+      AI_MAPPING_ENABLED: "true"
+      AI_MODEL_NAME: sentence-transformers/all-MiniLM-L6-v2
+    volumes:
+      - migration_data:/app
+
+  ui:
+    build: .
+    container_name: migration-agent-ui
+    command: >
+      python -m streamlit run ui/streamlit_app.py
+      --server.address=0.0.0.0
+      --server.port=8501
+    ports:
+      - "8501:8501"
+    environment:
+      API_URL: http://api:8000
+    depends_on:
+      - api
+
+volumes:
+  migration_data:

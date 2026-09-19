@@ -1,0 +1,22 @@
+﻿{
+  "autonomy_rules": {
+    "high_confidence": {
+      "decision": "auto_approve",
+      "minimum_confidence": 0.85,
+      "minimum_margin": 0.1
+    },
+    "medium_confidence": {
+      "decision": "escalate",
+      "minimum_confidence": 0.6
+    },
+    "low_confidence": {
+      "decision": "reject"
+    }
+  },
+  "safety_rules": {
+    "unknown_mapping": "reject",
+    "conflicting_values": "escalate",
+    "invalid_required_field": "escalate",
+    "unsafe_transformation": "escalate"
+  }
+}

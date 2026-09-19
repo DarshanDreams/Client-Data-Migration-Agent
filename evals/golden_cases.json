@@ -1,0 +1,88 @@
+﻿[
+  {
+    "id": "mapping_obvious",
+    "description": "Obvious HR field names should map autonomously.",
+    "source_fields": [
+      "Employee No",
+      "First Name",
+      "Last Name",
+      "Email Address",
+      "Mobile",
+      "DOB",
+      "Joined On",
+      "Department"
+    ],
+    "target_fields": [
+      "employee_id",
+      "first_name",
+      "last_name",
+      "email",
+      "phone",
+      "date_of_birth",
+      "hire_date",
+      "department"
+    ],
+    "expected": {
+      "Employee No": "auto_approve",
+      "First Name": "auto_approve",
+      "Last Name": "auto_approve",
+      "Email Address": "auto_approve",
+      "Mobile": "auto_approve",
+      "DOB": "auto_approve",
+      "Joined On": "auto_approve",
+      "Department": "auto_approve"
+    }
+  },
+  {
+    "id": "mapping_crm",
+    "description": "CRM aliases should map autonomously.",
+    "source_fields": [
+      "emp_id",
+      "fname",
+      "surname",
+      "email",
+      "phone_number",
+      "birth_date",
+      "start_date",
+      "dept"
+    ],
+    "target_fields": [
+      "employee_id",
+      "first_name",
+      "last_name",
+      "email",
+      "phone",
+      "date_of_birth",
+      "hire_date",
+      "department"
+    ],
+    "expected": {
+      "emp_id": "auto_approve",
+      "fname": "auto_approve",
+      "surname": "auto_approve",
+      "email": "auto_approve",
+      "phone_number": "auto_approve",
+      "birth_date": "auto_approve",
+      "start_date": "auto_approve",
+      "dept": "auto_approve"
+    }
+  },
+  {
+    "id": "unknown_field",
+    "description": "Unknown fields should not be guessed.",
+    "source_fields": [
+      "employee_no",
+      "mystery_attribute"
+    ],
+    "target_fields": [
+      "employee_id",
+      "first_name",
+      "last_name",
+      "email"
+    ],
+    "expected": {
+      "employee_no": "auto_approve",
+      "mystery_attribute": "reject"
+    }
+  }
+]

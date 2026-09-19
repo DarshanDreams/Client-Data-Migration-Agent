@@ -1,0 +1,4 @@
+Employee No,First Name,Last Name,Email Address,Mobile,DOB,Joined On,Department
+E001, John ,Smith,JOHN.SMITH@EXAMPLE.COM,+91 9876543210,15/03/1995,2022-06-01,Engineering
+E002,Priya,Sharma,priya.sharma@example.com,+91 9876543211,1997-11-22,01/07/2023,HR
+E003,Rahul,Verma,rahul.verma@example.com,+91 9876543212,1994-02-10,2021-09-15,Sales
