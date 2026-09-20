@@ -106,7 +106,6 @@ def render_review_queue(
                     )
 
                     st.success("Review submitted.")
-                    st.rerun()
 
                 except Exception as exc:
                     st.error(f"Could not resolve escalation: {exc}")

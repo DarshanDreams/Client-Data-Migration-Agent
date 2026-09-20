@@ -41,10 +41,11 @@ st.set_page_config(
 
 @st.cache_resource
 def get_direct_services():
+    audit_service = AuditService(enabled=False)
     return {
         "ingestion": DataIngestionService(),
-        "orchestrator": MigrationOrchestrator(),
-        "audit": AuditService(),
+        "orchestrator": MigrationOrchestrator(audit_service=audit_service),
+        "audit": audit_service,
         "target_api": MockTargetAPI(),
     }
 
@@ -174,6 +175,7 @@ def api_post(
 # DIRECT MODE HELPERS
 # -------------------------------------------------------------------
 
+@st.cache_data
 def load_target_schema():
     schema_path = (
         PROJECT_ROOT
@@ -951,8 +953,6 @@ if migration:
                             st.success(
                                 "Decision applied."
                             )
-
-                            st.rerun()
 
                         except Exception as exc:
                             st.error(

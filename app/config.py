@@ -16,7 +16,9 @@ class Settings(BaseSettings):
 
     target_api_url: str = "http://localhost:8000"
 
-    database_url: str = "sqlite:///./migration.db"
+    database_url: str = "sqlite:///:memory:"
+    audit_database_path: str = ":memory:"
+    audit_enabled: bool = False
 
     # Open-source AI mapping
     ai_mapping_enabled: bool = True

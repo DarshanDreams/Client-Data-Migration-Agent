@@ -4,21 +4,35 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from app.config import settings
+
 
 class AuditService:
     """
     Append-only audit trail for migration decisions and changes.
-    Uses SQLite so the demo requires no external database.
+
+    For local/demo usage, audit writes can be disabled to keep the app fast.
     """
 
-    def __init__(self, database_path: str = "migration_audit.db"):
-        self.database_path = Path(database_path)
+    def __init__(
+        self,
+        database_path: str | None = None,
+        enabled: bool | None = None,
+    ):
+        self.enabled = settings.audit_enabled if enabled is None else enabled
+        self.database_path = database_path or settings.audit_database_path
+        self._use_memory_db = self.database_path == ":memory:"
         self._initialize()
 
     def _connect(self):
+        if self._use_memory_db:
+            return sqlite3.connect(":memory:")
         return sqlite3.connect(self.database_path)
 
     def _initialize(self):
+        if not self.enabled:
+            return
+
         with self._connect() as connection:
             connection.execute(
                 """
@@ -41,6 +55,9 @@ class AuditService:
         details: dict[str, Any],
         entity_id: str | None = None,
     ) -> int:
+
+        if not self.enabled:
+            return 0
 
         timestamp = datetime.now(timezone.utc).isoformat()
 
@@ -65,6 +82,9 @@ class AuditService:
             return int(cursor.lastrowid)
 
     def list_events(self, migration_id: str) -> list[dict[str, Any]]:
+        if not self.enabled:
+            return []
+
         with self._connect() as connection:
             rows = connection.execute(
                 """
